@@ -1,23 +1,46 @@
-import Sqaure from './Square';
-import './styles.scss';
+import { useState } from 'react';
+import Square from './Square';
 
 const Board = () => {
+  const [squares, setSquares] = useState(Array(9).fill(null));
+
+  const handleSquareClick = clickedPosition => {
+    setSquares(currentSquares => {
+      return currentSquares.map((squareValue, position) => {
+        if (clickedPosition === position) {
+          return 'X';
+        }
+
+        return squareValue;
+      });
+    });
+  };
+
+  const renderSquare = position => {
+    return (
+      <Square
+        value={squares[position]}
+        onClick={() => handleSquareClick(position)}
+      />
+    );
+  };
+
   return (
     <div className="board">
       <div className="board-row">
-        <Sqaure value={0} />
-        <Sqaure value={1} />
-        <Sqaure value={2} />
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
       </div>
       <div className="board-row">
-        <Sqaure value={3} />
-        <Sqaure value={4} />
-        <Sqaure value={5} />
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
       </div>
       <div className="board-row">
-        <Sqaure value={6} />
-        <Sqaure value={7} />
-        <Sqaure value={8} />
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
       </div>
     </div>
   );
